@@ -15,8 +15,7 @@ class Content extends Component {
     editMode: false
   }
 
-  toggleEdit = event => {
-    event.preventDefault()
+  toggleEdit = () => {
     this.setState({
       editMode: !this.state.editMode
     })
@@ -24,7 +23,7 @@ class Content extends Component {
 
   renderContent = () => {
     if (this.state.editMode) {
-      return <NoteEditor chosenNote={this.props.chosenNote} toggleEdit={this.toggleEdit} />;
+      return <NoteEditor chosenNote={this.props.chosenNote} toggleEdit={this.toggleEdit} patchNoteInAllNotes={this.props.patchNoteInAllNotes} />;
     } else if (this.props.chosenNote.title) {
       return <NoteViewer chosenNote={this.props.chosenNote} toggleEdit={this.toggleEdit} />;
     } else {

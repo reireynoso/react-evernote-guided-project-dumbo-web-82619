@@ -25,13 +25,21 @@ class NoteContainer extends Component {
     })
   }
 
+  patchNoteInAllNotes = patchedNote => {
+    const newArray = this.state.allNotes.map( note => note.id === patchedNote.id ? patchedNote : note )
+    this.setState({
+      allNotes: newArray,
+      chosenNote: patchedNote
+    })
+  }
+
   render() {
     return (
       <Fragment>
         <Search />
         <div className='container'>
           <Sidebar allNotes={this.state.allNotes} handleChosenNote={this.handleChosenNote} />
-          <Content  chosenNote={this.state.chosenNote} />
+          <Content chosenNote={this.state.chosenNote} patchNoteInAllNotes={this.patchNoteInAllNotes} />
         </div>
       </Fragment>
     );

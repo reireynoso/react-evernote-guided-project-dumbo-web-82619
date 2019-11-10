@@ -5,7 +5,7 @@ const NoteViewer = ({ chosenNote, toggleEdit }) => {
     <Fragment>
       <h2>{chosenNote.title}</h2>
       <p>{chosenNote.body}</p>
-      <button onClick={toggleEdit}>Edit</button>
+      <button onClick={event => toggleEdit()}>Edit</button>
     </Fragment>
   );
 }
