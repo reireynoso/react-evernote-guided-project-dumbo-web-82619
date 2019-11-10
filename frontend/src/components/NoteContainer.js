@@ -6,7 +6,8 @@ import Content from './Content';
 class NoteContainer extends Component {
   state = {
     allNotes: [],
-    chosenNote: {}
+    chosenNote: {},
+    searchTerm: ""
   }
 
   componentDidMount() {
@@ -33,12 +34,24 @@ class NoteContainer extends Component {
     })
   }
 
+  handleSearchTermChange = event => {
+    this.setState({
+      searchTerm: event.target.value
+    })
+  }
+
+  filterNotes = () => {
+    return this.state.allNotes.filter(note => {
+      return note.title.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+    })
+  }
+
   render() {
     return (
       <Fragment>
-        <Search />
+        <Search searchTerm={this.state.searchTerm} handleSearchTermChange={this.handleSearchTermChange} />
         <div className='container'>
-          <Sidebar allNotes={this.state.allNotes} handleChosenNote={this.handleChosenNote} />
+          <Sidebar allNotes={this.filterNotes()} handleChosenNote={this.handleChosenNote} />
           <Content chosenNote={this.state.chosenNote} patchNoteInAllNotes={this.patchNoteInAllNotes} />
         </div>
       </Fragment>
