@@ -25,13 +25,13 @@ class NoteEditor extends Component {
     .then(res => res.json())
     .then(patchedNote => {
       this.props.patchNoteInAllNotes(patchedNote)
-      this.props.toggleMode("view")
+      this.props.toggleEdit()
     })
   }
   
   handleCancel = event => {
     event.preventDefault()
-    this.props.toggleMode("view")
+    this.props.toggleEdit()
   }
 
   render() {

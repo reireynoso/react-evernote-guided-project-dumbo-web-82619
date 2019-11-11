@@ -7,8 +7,7 @@ class NoteContainer extends Component {
   state = {
     allNotes: [],
     chosenNote: {},
-    searchTerm: "",
-    mode: ""
+    searchTerm: ""
   }
 
   componentDidMount() {
@@ -23,8 +22,7 @@ class NoteContainer extends Component {
 
   handleChosenNote = note => {
     this.setState({
-      chosenNote: note,
-      mode: "view"
+      chosenNote: note
     })
   }
 
@@ -48,30 +46,13 @@ class NoteContainer extends Component {
     })
   }
 
-  toggleMode = string => {
-    this.setState({
-      mode: string
-    })
-  }
-
   render() {
     return (
       <Fragment>
-        <Search 
-          searchTerm={this.state.searchTerm} 
-          handleSearchTermChange={this.handleSearchTermChange}
-         />
+        <Search searchTerm={this.state.searchTerm} handleSearchTermChange={this.handleSearchTermChange} />
         <div className='container'>
-          <Sidebar 
-            allNotes={this.filterNotes()} 
-            handleChosenNote={this.handleChosenNote}
-           />
-          <Content 
-            chosenNote={this.state.chosenNote} 
-            patchNoteInAllNotes={this.patchNoteInAllNotes}
-            mode={this.state.mode}
-            toggleMode={this.toggleMode}
-           />
+          <Sidebar allNotes={this.filterNotes()} handleChosenNote={this.handleChosenNote} />
+          <Content chosenNote={this.state.chosenNote} patchNoteInAllNotes={this.patchNoteInAllNotes} />
         </div>
       </Fragment>
     );

@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 
-const NoteViewer = ({ chosenNote, toggleMode }) => {
+const NoteViewer = ({ chosenNote, toggleEdit }) => {
   return (
     <Fragment>
       <h2>{chosenNote.title}</h2>
       <p>{chosenNote.body}</p>
-      <button onClick={event => toggleMode("edit")}>Edit</button>
+      <button onClick={event => toggleEdit()}>Edit</button>
     </Fragment>
   );
 }
