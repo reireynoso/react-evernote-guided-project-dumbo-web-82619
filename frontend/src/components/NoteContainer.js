@@ -30,8 +30,8 @@ class NoteContainer extends Component {
       <Fragment>
         <Search />
         <div className='container'>
-          <Sidebar allNotes={this.state.allNotes} handleChosenNote={this.handleChosenNote} />
-          <Content  chosenNote={this.state.chosenNote} />
+          <Sidebar allNotes={this.state.allNotes} />
+          <Content />
         </div>
       </Fragment>
     );
