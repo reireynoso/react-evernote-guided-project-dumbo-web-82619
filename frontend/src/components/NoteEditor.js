@@ -12,31 +12,9 @@ class NoteEditor extends Component {
     })
   }
 
-  handleSubmit = event => {
-    event.preventDefault()
-    fetch(`http://localhost:3000/api/v1/notes/${this.props.chosenNote.id}`, {
-      method: "PATCH",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(this.state)
-    })
-    .then(res => res.json())
-    .then(patchedNote => {
-      this.props.patchNoteInAllNotes(patchedNote)
-      this.props.toggleEdit()
-    })
-  }
-  
-  handleCancel = event => {
-    event.preventDefault()
-    this.props.toggleEdit()
-  }
-
   render() {
     return (
-      <form className="note-editor" onSubmit={this.handleSubmit} >
+      <form className="note-editor">
         <input 
         type="text" 
         name="title"
@@ -50,7 +28,7 @@ class NoteEditor extends Component {
          />
         <div className="button-row">
           <input className="button" type="submit" value="Save" />
-          <button onClick={this.handleCancel} type="button">Cancel</button>
+          <button onClick={this.props.toggleEdit} type="button">Cancel</button>
         </div>
       </form>
     );
