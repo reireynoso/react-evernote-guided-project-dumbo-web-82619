@@ -11,14 +11,30 @@ import Instructions from './Instructions';
           refactor to get this Content component to work.
 */
 class Content extends Component {
+
+  state = {
+    editMode: false
+  }
+  noteExists = () => {
+    return Object.keys(this.props.clickedNote).length !== 0
+  }
+
+  handleEditMode = () => {
+    this.setState({
+      editMode: !this.state.editMode
+    })
+  }
+
   renderContent = () => {
-    if (false) {
-      return <NoteEditor />;
-    } else if (false) {
-      return <NoteViewer />;
+    if (this.noteExists() && this.state.editMode) {
+      return <NoteEditor handleEditMode={this.handleEditMode} clickedNote={this.props.clickedNote} />;
+    } else if (this.noteExists()) {
+      return <NoteViewer handleEditMode={this.handleEditMode} clickedNote={this.props.clickedNote}/>;
     } else {
       return <Instructions />;
     }
+    // console.log(this.noteExists())
+    // return <NoteViewer clickedNote={this.props.clickedNote}/>
   }
 
   render() {
