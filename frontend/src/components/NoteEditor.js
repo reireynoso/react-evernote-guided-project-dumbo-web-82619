@@ -11,9 +11,17 @@ class NoteEditor extends Component {
       [e.target.name]: e.target.value
     })
   }
+
+  handleOnSubmit = (e) => {
+    e.preventDefault()
+    // console.log(this.state)
+    this.props.handleUpdateNote({...this.state, id: this.props.clickedNote.id})
+    this.props.handleEditMode()
+  }
+
   render() {
     return (
-      <form className="note-editor">
+      <form onSubmit={this.handleOnSubmit} className="note-editor">
         <input onChange={this.handleOnChange} type="text" name="title" value={this.state.title} />
         <textarea onChange={this.handleOnChange} name="body" value={this.state.body}/>
         <div className="button-row">

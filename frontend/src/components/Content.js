@@ -12,24 +12,15 @@ import Instructions from './Instructions';
 */
 class Content extends Component {
 
-  state = {
-    editMode: false
-  }
   noteExists = () => {
     return Object.keys(this.props.clickedNote).length !== 0
   }
 
-  handleEditMode = () => {
-    this.setState({
-      editMode: !this.state.editMode
-    })
-  }
-
   renderContent = () => {
-    if (this.noteExists() && this.state.editMode) {
-      return <NoteEditor handleEditMode={this.handleEditMode} clickedNote={this.props.clickedNote} />;
+    if (this.noteExists() && this.props.editMode) {
+      return <NoteEditor handleUpdateNote={this.props.handleUpdateNote} handleEditMode={this.props.handleEditMode} clickedNote={this.props.clickedNote} />;
     } else if (this.noteExists()) {
-      return <NoteViewer handleEditMode={this.handleEditMode} clickedNote={this.props.clickedNote}/>;
+      return <NoteViewer handleEditMode={this.props.handleEditMode} clickedNote={this.props.clickedNote}/>;
     } else {
       return <Instructions />;
     }

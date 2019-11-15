@@ -6,7 +6,8 @@ import Content from './Content';
 class NoteContainer extends Component {
   state = {
     notes: [],
-    clickedNote: {}
+    clickedNote: {},
+    editMode: false
   }
 
   componentDidMount = () => {
@@ -20,10 +21,31 @@ class NoteContainer extends Component {
     })
   }
 
-  handleClickNote = (note) => {
-    // console.log(note)
+  handleEditMode = () => {
     this.setState({
-      clickedNote: note
+      editMode: !this.state.editMode
+    })
+  }
+
+  handleUpdateNote = (updatedNote) => {
+    // console.log(note)
+    const updatedNoteArr = this.state.notes.map(note => {
+      if(note.id === updatedNote.id){
+        note = updatedNote
+        return note
+      }
+      return note
+    })
+    this.setState({
+      notes: updatedNoteArr,
+      clickedNote: updatedNote
+    })
+  }
+
+  handleClickNote = (note) => {
+    this.setState({
+      clickedNote: note,
+      editMode: false
     })
   }
   render() {
@@ -33,7 +55,7 @@ class NoteContainer extends Component {
         <Search />
         <div className='container'>
           <Sidebar handleClickNote={this.handleClickNote} notes={this.state.notes} />
-          <Content clickedNote={this.state.clickedNote} />
+          <Content editMode={this.state.editMode} handleEditMode={this.handleEditMode} handleUpdateNote={this.handleUpdateNote} clickedNote={this.state.clickedNote} />
         </div>
       </Fragment>
     );
