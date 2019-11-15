@@ -15,8 +15,19 @@ class NoteEditor extends Component {
   handleOnSubmit = (e) => {
     e.preventDefault()
     // console.log(this.state)
-    this.props.handleUpdateNote({...this.state, id: this.props.clickedNote.id})
-    this.props.handleEditMode()
+    fetch(`http://localhost:3000/api/v1/notes/${this.props.clickedNote.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(this.state)
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      this.props.handleUpdateNote(data)
+      this.props.handleEditMode()
+    })
   }
 
   render() {
