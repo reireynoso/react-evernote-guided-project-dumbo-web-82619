@@ -7,17 +7,38 @@ class NoteContainer extends Component {
   state = {
     notes: [],
     clickedNote: {},
-    editMode: false
+    editMode: false,
+    searchTerm: ""
   }
 
   componentDidMount = () => {
     fetch(`http://localhost:3000/api/v1/notes`)
     .then(resp => resp.json())
     .then(notes => {
-      console.log(notes)
+      // console.log(notes)
       this.setState({
         notes
       })
+    })
+  }
+
+  handleFilterByTitle = () => {
+    return this.state.notes.filter(note => {
+      return note.title.toLowerCase().includes(this.state.searchTerm.trim().toLowerCase())
+    })
+  }
+
+  handleSearchTerm = (e) => {
+    // console.log(e.target.value)
+    this.setState({
+      searchTerm: e.target.value
+    })
+  }
+
+  handleNewNote = (newNote) => {
+    console.log(newNote)
+    this.setState({
+      notes: [...this.state.notes, newNote]
     })
   }
 
@@ -52,9 +73,9 @@ class NoteContainer extends Component {
     // console.log(this.state.clickedNote)
     return (
       <Fragment>
-        <Search />
+        <Search handleSearchTerm={this.handleSearchTerm} />
         <div className='container'>
-          <Sidebar handleClickNote={this.handleClickNote} notes={this.state.notes} />
+          <Sidebar handleNewNote={this.handleNewNote} handleClickNote={this.handleClickNote} notes={this.handleFilterByTitle()} />
           <Content editMode={this.state.editMode} handleEditMode={this.handleEditMode} handleUpdateNote={this.handleUpdateNote} clickedNote={this.state.clickedNote} />
         </div>
       </Fragment>
