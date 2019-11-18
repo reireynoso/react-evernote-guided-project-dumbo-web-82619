@@ -8,7 +8,8 @@ class NoteContainer extends Component {
     notes: [],
     clickedNote: {},
     editMode: false,
-    searchTerm: ""
+    searchTerm: "",
+    bodyTerm: ""
   }
 
   componentDidMount = () => {
@@ -23,15 +24,31 @@ class NoteContainer extends Component {
   }
 
   handleFilterByTitle = () => {
-    return this.state.notes.filter(note => {
-      return note.title.toLowerCase().includes(this.state.searchTerm.trim().toLowerCase())
-    })
+    // console.log(this.state.searchTerm === "")
+    if(this.state.searchTerm === ""){
+      return this.state.notes.filter(note => {
+        return note.body.toLowerCase().includes(this.state.bodyTerm.trim().toLowerCase())
+      })
+    }
+    else if(this.state.bodyTerm === ""){
+      return this.state.notes.filter(note => {
+        return note.title.toLowerCase().includes(this.state.searchTerm.trim().toLowerCase())
+      })
+    }
   }
 
   handleSearchTerm = (e) => {
     // console.log(e.target.value)
     this.setState({
+      bodyTerm: "",
       searchTerm: e.target.value
+    })
+  }
+
+  handleSearchBodyTerm = (e) => {
+    this.setState({
+      searchTerm: "",
+      bodyTerm: e.target.value
     })
   }
 
@@ -74,6 +91,7 @@ class NoteContainer extends Component {
     return (
       <Fragment>
         <Search handleSearchTerm={this.handleSearchTerm} />
+        <Search handleSearchTerm={this.handleSearchBodyTerm} />
         <div className='container'>
           <Sidebar handleNewNote={this.handleNewNote} handleClickNote={this.handleClickNote} notes={this.handleFilterByTitle()} />
           <Content editMode={this.state.editMode} handleEditMode={this.handleEditMode} handleUpdateNote={this.handleUpdateNote} clickedNote={this.state.clickedNote} />
